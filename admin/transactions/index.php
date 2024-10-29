@@ -40,7 +40,15 @@
 				<tbody>
 					<?php 
 						$i = 1;
-						$qry = $conn->query("SELECT * from `transaction_list` order by `status` asc,unix_timestamp(date_created) asc ");
+						$user_id = $_settings->userdata('user_id') ;
+						if ($_settings->userdata('type') == 1){
+
+							$qry = $conn->query("SELECT * from `transaction_list` order by `status` asc,unix_timestamp(date_created) asc ");
+						}
+						else{
+							$qry = $conn->query("SELECT * from `transaction_list` WHERE user_id = '$user_id'  order by `status` asc,unix_timestamp(date_created) asc ");
+
+						}
 						while($row = $qry->fetch_assoc()):
 					?>
 						<tr>

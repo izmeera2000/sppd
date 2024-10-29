@@ -159,7 +159,7 @@ class Master extends DBConnection
 		// }
 		$data = "";
 		foreach ($_POST as $k => $v) {
-			if (in_array($k, array('code', 'client_name', 'client_contact', 'pay_method','filename', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
+			if (in_array($k, array('code', 'user_id','client_name', 'client_contact', 'pay_method','filename', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
 				if (!is_numeric($v))
 					$v = $this->conn->real_escape_string($v);
 				if (!empty($data))

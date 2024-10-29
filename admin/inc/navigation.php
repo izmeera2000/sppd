@@ -56,6 +56,8 @@
                         </p>
                       </a>
                     </li>
+                    <?php if($_settings->userdata('type') == 1): ?>
+
                     <li class="nav-header">Reports</li>
                       <li class="nav-item dropdown">
                         <a href="<?php echo base_url ?>admin/?page=reports/daily_transaction" class="nav-link nav-reports_daily_transaction">
@@ -81,6 +83,7 @@
                           </p>
                         </a>
                       </li>
+
                     <li class="nav-header">Maintenance</li>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=categories" class="nav-link nav-categories">
@@ -90,7 +93,6 @@
                         </p>
                       </a>
                     </li>
-                    <?php if($_settings->userdata('type') == 1): ?>
                     <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=user/list" class="nav-link nav-user_list">
                         <i class="nav-icon fas fa-users-cog"></i>

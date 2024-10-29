@@ -1,7 +1,7 @@
 <?php
 ob_start();
-ini_set('date.timezone','Asia/Manila');
-date_default_timezone_set('Asia/Manila');
+ini_set('date.timezone','Asia/Kuala_Lumpur');
+date_default_timezone_set('Asia/Kuala_Lumpur');
 session_start();
 
 require_once('initialize.php');
@@ -12,7 +12,8 @@ $conn = $db->conn;
 
 function redirect($url=''){
 	if(!empty($url))
-	echo '<script>location.href="'.base_url .$url.'"</script>';
+	// echo '<script>location.href="'.base_url .$url.'"</script>';
+    header('location: ' . base_url . $url);
 }
 function validate_image($file){
 	if(!empty($file)){

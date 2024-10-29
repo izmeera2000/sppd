@@ -24,6 +24,7 @@ $price_arr = [];
             <div class="container-fluid">
                 <form action="" id="transaction_form">
                     <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $_settings->userdata('user_id') ?>">
                     <fieldset class="border-bottom">
                         <legend class="text-muted">Client Information</legend>
                         <div class="row">

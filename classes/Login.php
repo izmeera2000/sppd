@@ -32,15 +32,16 @@ class Login extends DBConnection {
 					$this->settings->set_userdata($k,$v);
 				}
 			}
-			$this->settings->set_userdata('login_type',1);
-		return json_encode(array('status'=>'success'));
+			$this->settings->set_userdata('login_type',$res['type']);
+			$this->settings->set_userdata('user_id',$res['id']);
+		return json_encode(array('status'=>'success','login_type'=> $res['type']));
 		}else{
 		return json_encode(array('status'=>'incorrect','error'=>$this->conn->error));
 		}
 	}
 	public function logout(){
 		if($this->settings->sess_des()){
-			redirect('admin/login.php');
+			redirect('index.php');
 		}
 	}
 	function employee_login(){
