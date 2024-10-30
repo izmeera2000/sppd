@@ -1,7 +1,7 @@
- <?php require_once('./config.php') ?> 
+<!-- <?php require_once('../config.php') ?> -->
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
-<?php require_once('inc/header.php') ?>
+ <?php require_once('inc/header.php') ?>
 <body class="hold-transition ">
   <script>
     start_loader()
@@ -13,9 +13,8 @@
     }
     body{
       background-image: url("<?php echo validate_image($_settings->info('cover')) ?>");
-      background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: 100% 100%;
+      background-size:cover;
+      background-repeat:no-repeat;
     }
     .login-title{
       text-shadow: 2px 2px black

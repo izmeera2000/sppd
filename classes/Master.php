@@ -153,13 +153,10 @@ class Master extends DBConnection
 		}
 		extract($_POST);
 		// print_r( $_POST);
-		// foreach($_FILES as $k){
-		// 	print_r( $k['name']);
 
-		// }
 		$data = "";
 		foreach ($_POST as $k => $v) {
-			if (in_array($k, array('code', 'user_id','client_name', 'client_contact', 'pay_method','filename', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
+			if (in_array($k, array('code', 'user_id','client_name', 'client_contact','filename', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
 				if (!is_numeric($v))
 					$v = $this->conn->real_escape_string($v);
 				if (!empty($data))
@@ -217,12 +214,14 @@ class Master extends DBConnection
 			if (isset($sql2))
 				$save2 = $this->conn->query($sql2);
 			if ($save2) {
+
 				$this->conn->query("UPDATE `transaction_list` set total_amount = '{$total}' where id = '{$tid}'");
 				if (isset($amount)) {
+					// echo $method;
 					if (empty($id))
-						$save3 = $this->conn->query("INSERT INTO payment_history (`transaction_id`,`amount`) VALUES ('{$tid}','{$amount}')");
+						$save3 = $this->conn->query("INSERT INTO payment_history (`transaction_id`,`amount`,`method`) VALUES ('{$tid}','{$amount}','{$method}')");
 					else {
-						$save3 = $this->conn->query("UPDATE payment_history set `amount` = '{$amount}' where transaction_id = '{$tid}' order by unix_timestamp(date_created) asc limit 1");
+						$save3 = $this->conn->query("UPDATE payment_history set `amount` = '{$amount}', `method` = '{$method}' where transaction_id = '{$tid}' order by unix_timestamp(date_created) asc limit 1");
 					}
 					if ($save3) {
 						$total_paid = $this->conn->query("SELECT SUM(amount) from payment_history where transaction_id = '{$tid}'")->fetch_array()[0];

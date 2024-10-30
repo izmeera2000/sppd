@@ -46,7 +46,7 @@ $(document).ready(function() {
                             location.href = _base_url_ + 'admin';
                         }
                         else{
-                            location.href = _base_url_ + 'admin';
+                            location.href = _base_url_ + 'user';
 
                         }
 

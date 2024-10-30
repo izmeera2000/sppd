@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 26, 2024 at 07:06 PM
+-- Generation Time: Oct 30, 2024 at 05:15 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `category_list`;
 CREATE TABLE IF NOT EXISTS `category_list` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -66,19 +66,19 @@ CREATE TABLE IF NOT EXISTS `payment_history` (
   `date_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payment_history`
 --
 
 INSERT INTO `payment_history` (`id`, `transaction_id`, `amount`, `method`, `date_created`, `date_updated`) VALUES
-(4, 3, 25, NULL, '2022-01-26 14:16:31', NULL),
-(5, 3, 25, NULL, '2022-01-26 14:16:41', NULL),
-(7, 5, 1500, NULL, '2022-01-26 14:20:06', '2022-01-26 14:20:30'),
-(8, 5, 2640, NULL, '2022-01-26 14:20:50', NULL),
-(66, 73, 0, NULL, '2024-10-21 16:55:48', NULL),
-(67, 74, 35, NULL, '2024-10-27 01:02:37', '2024-10-27 01:06:54');
+(4, 3, 25, '0', '2022-01-26 14:16:31', '2024-10-30 12:17:09'),
+(5, 3, 25, '0', '2022-01-26 14:16:41', '2024-10-30 12:17:11'),
+(7, 5, 1500, '0', '2022-01-26 14:20:06', '2024-10-30 12:17:13'),
+(8, 5, 2640, '0', '2022-01-26 14:20:50', '2024-10-30 12:17:14'),
+(74, 81, 0, 'QR', '2024-10-30 12:45:36', NULL),
+(75, 81, 0, 'QR', '2024-10-30 12:53:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ DROP TABLE IF EXISTS `price_list`;
 CREATE TABLE IF NOT EXISTS `price_list` (
   `id` int NOT NULL AUTO_INCREMENT,
   `category_id` int NOT NULL,
-  `size` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `size` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` float NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `delete_flag` tinyint(1) NOT NULL DEFAULT '0',
@@ -127,8 +127,8 @@ INSERT INTO `price_list` (`id`, `category_id`, `size`, `price`, `status`, `delet
 DROP TABLE IF EXISTS `system_info`;
 CREATE TABLE IF NOT EXISTS `system_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `meta_field` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_field` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -151,33 +151,25 @@ INSERT INTO `system_info` (`id`, `meta_field`, `meta_value`) VALUES
 
 DROP TABLE IF EXISTS `transaction_items`;
 CREATE TABLE IF NOT EXISTS `transaction_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `transaction_id` int NOT NULL,
   `price_id` int NOT NULL,
   `price` float NOT NULL DEFAULT '0',
   `quantity` float NOT NULL DEFAULT '0',
-  `filename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filename` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total` float NOT NULL DEFAULT '0',
   `date_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`),
   KEY `price_id` (`price_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaction_items`
 --
 
-INSERT INTO `transaction_items` (`transaction_id`, `price_id`, `price`, `quantity`, `filename`, `total`, `date_updated`) VALUES
-(3, 4, 6, 3, '0', 18, '2022-01-26 13:42:06'),
-(3, 3, 5, 6, '0', 30, '2022-01-26 13:42:06'),
-(3, 1, 5, 6, '0', 30, '2022-01-26 13:42:06'),
-(5, 12, 220, 5, '0', 1100, '2022-01-26 14:20:06'),
-(5, 10, 250, 10, '0', 2500, '2022-01-26 14:20:06'),
-(5, 13, 180, 3, '0', 540, '2022-01-26 14:20:06'),
-(69, 3, 5, 2, '69-0-JHEV_Terma.pdf', 10, '2024-10-21 16:50:05'),
-(71, 3, 5, 2, '71-0-JHEV_Terma.pdf', 10, '2024-10-21 16:52:44'),
-(72, 3, 5, 2, '72-0-JHEV_Terma.pdf', 10, '2024-10-21 16:53:39'),
-(73, 3, 5, 2, '73-0-JHEV_Terma.pdf', 10, '2024-10-21 16:55:48'),
-(74, 3, 5, 7, '74-BORANG KEBAJIKAN JHEV.BK.2019 kemaskini.pdf', 35, '2024-10-27 01:02:37');
+INSERT INTO `transaction_items` (`id`, `transaction_id`, `price_id`, `price`, `quantity`, `filename`, `total`, `date_updated`) VALUES
+(16, 81, 3, 5, 2, '81-0-JHEV_Terma.pdf', 10, '2024-10-30 12:45:36');
 
 -- --------------------------------------------------------
 
@@ -188,10 +180,11 @@ INSERT INTO `transaction_items` (`transaction_id`, `price_id`, `price`, `quantit
 DROP TABLE IF EXISTS `transaction_list`;
 CREATE TABLE IF NOT EXISTS `transaction_list` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client_contact` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `client_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `client_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `client_contact` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `client_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_amount` float NOT NULL DEFAULT '0',
   `paid_amount` float NOT NULL DEFAULT '0',
   `balance` float NOT NULL DEFAULT '0',
@@ -200,20 +193,16 @@ CREATE TABLE IF NOT EXISTS `transaction_list` (
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaction_list`
 --
 
-INSERT INTO `transaction_list` (`id`, `code`, `client_name`, `client_contact`, `client_address`, `total_amount`, `paid_amount`, `balance`, `payment_status`, `status`, `date_created`, `date_updated`) VALUES
-(3, '202201-00001', 'John D Smith', '09123456789', 'Sample Address only', 78, 50, 28, 1, 0, '2022-01-26 13:06:16', '2022-01-26 14:16:41'),
-(5, '202201-00002', 'Claire Blake', '09789456123', 'Over Here', 4140, 4140, 0, 2, 2, '2022-01-26 14:20:06', '2022-01-26 14:26:09'),
-(69, '202410-00001', 'asdasGuest', 'N/Adasdasd', '', 10, 0, 0, 0, 0, '2024-10-21 16:50:05', NULL),
-(71, '202410-00002', 'Guest', 'N/Aasd', '', 10, 0, 0, 0, 0, '2024-10-21 16:52:44', NULL),
-(72, '202410-00003', 'Guest', 'Nasdasd/A', '', 10, 0, 0, 0, 0, '2024-10-21 16:53:39', NULL),
-(73, '202410-00004', 'Guest', 'N/Aasdasd', '', 10, 0, 10, 0, 0, '2024-10-21 16:55:48', '2024-10-21 16:55:48'),
-(74, '202410-00005', 'Guest', 'N/Adsad', '', 35, 35, 0, 2, 0, '2024-10-27 01:02:37', '2024-10-27 01:06:54');
+INSERT INTO `transaction_list` (`id`, `code`, `user_id`, `client_name`, `client_contact`, `client_address`, `total_amount`, `paid_amount`, `balance`, `payment_status`, `status`, `date_created`, `date_updated`) VALUES
+(3, '202201-00001', NULL, 'John D Smith', '09123456789', 'Sample Address only', 78, 50, 28, 1, 0, '2022-01-26 13:06:16', '2022-01-26 14:16:41'),
+(5, '202201-00002', NULL, 'Claire Blake', '09789456123', 'Over Here', 4140, 4140, 0, 2, 2, '2022-01-26 14:20:06', '2022-01-26 14:26:09'),
+(81, '202410-00001', 7, 'Guest', 'N/Asdasa', '', 10, 0, 10, 0, 0, '2024-10-30 12:45:36', '2024-10-30 12:45:36');
 
 -- --------------------------------------------------------
 
@@ -224,27 +213,29 @@ INSERT INTO `transaction_list` (`id`, `code`, `client_name`, `client_contact`, `
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `middlename` text COLLATE utf8mb4_unicode_ci,
-  `lastname` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` text COLLATE utf8mb4_unicode_ci,
+  `firstname` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `middlename` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `lastname` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_login` datetime DEFAULT NULL,
   `type` tinyint(1) NOT NULL DEFAULT '0',
   `status` int NOT NULL DEFAULT '1' COMMENT '0=not verified, 1 = verified',
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `username`, `password`, `avatar`, `last_login`, `type`, `status`, `date_added`, `date_updated`) VALUES
-(1, 'Adminstrator', NULL, 'Admin', 'admin', 'a8f5f167f44f4964e6c998dee827110c', 'uploads/avatar-1.png?v=1639468007', NULL, 1, 1, '2021-01-20 14:02:37', '2024-10-27 01:00:33'),
-(7, 'Samantha', NULL, 'Lou', 'sam23', 'a8f5f167f44f4964e6c998dee827110c', 'uploads/avatar-7.png?v=1643180426', NULL, 2, 1, '2022-01-26 15:00:26', '2024-10-21 00:39:06');
+INSERT INTO `users` (`id`, `firstname`, `middlename`, `lastname`, `phone`, `username`, `password`, `avatar`, `last_login`, `type`, `status`, `date_added`, `date_updated`) VALUES
+(1, 'Adminstrator', NULL, 'Admin', NULL, 'admin', 'a8f5f167f44f4964e6c998dee827110c', 'uploads/avatar-1.png?v=1639468007', NULL, 1, 1, '2021-01-20 14:02:37', '2024-10-27 01:00:33'),
+(7, 'Samantha', NULL, 'Lou', NULL, 'sam23', 'a8f5f167f44f4964e6c998dee827110c', 'uploads/avatar-7.png?v=1643180426', NULL, 2, 1, '2022-01-26 15:00:26', '2024-10-21 00:39:06'),
+(8, 'asdas', NULL, 'dasdasd', '1212', 'asdasd', 'e93ccf5ffc90eefcc0bdb81f87d25d1a', NULL, NULL, 1, 1, '2024-10-30 13:03:56', NULL);
 
 --
 -- Constraints for dumped tables
