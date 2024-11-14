@@ -13,7 +13,7 @@
         border-radius:100%;
     }
 </style>
-<div class="card card-outline card-purple">
+<div class="card card-outline card-red">
 	<div class="card-header">
 		<h3 class="card-title">List of System Users</h3>
 		<div class="card-tools">

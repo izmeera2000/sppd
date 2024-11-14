@@ -6,7 +6,7 @@
         object-position:center center;
     }
 </style>
-<div class="card card-outline card-purple rounded-0 shadow">
+<div class="card card-outline card-red rounded-0 shadow">
 	<div class="card-header">
 		<h3 class="card-title">List of Prices</h3>
 		<?php if($_settings->userdata('type') == 1): ?>
@@ -29,7 +29,7 @@
 					<col width="15%">
 				</colgroup>
 				<thead>
-					<tr class="bg-gradient-purple text-light">
+					<tr class="bg-gradient-red text-light">
 						<th>#</th>
 						<th>Date Created</th>
 						<th>Category</th>
@@ -55,10 +55,10 @@
 								<?php 
 									switch ($row['status']){
 										case 1:
-											echo '<span class="rounded-pill badge badge-success bg-gradient-teal px-3">Active</span>';
+											echo '<span class="rounded-pill badge badge-success bg-gradient-teal px-3">Available</span>';
 											break;
 										case 0:
-											echo '<span class="rounded-pill badge badge-danger bg-gradient-danger px-3">Inactive</span>';
+											echo '<span class="rounded-pill badge badge-danger bg-gradient-danger px-3">Not Available</span>';
 											break;
 									}
 								?>

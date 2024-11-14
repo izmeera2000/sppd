@@ -44,7 +44,7 @@
     </div>
     <div class="col-5 h-100 bg-gradient">
       <div class="d-flex w-100 h-100 justify-content-center align-items-center">
-        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-purple rounded-0 shadow">
+        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-red rounded-0 shadow">
           <div class="card-header rounded-0">
             <h4 class="text-purle text-center"><b>Login</b></h4>
           </div>

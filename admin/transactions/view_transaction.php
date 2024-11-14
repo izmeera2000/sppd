@@ -130,7 +130,7 @@ if (isset($_GET['id'])) {
                                     <col width="25%">
                                 </colgroup>
                                 <thead>
-                                    <tr class="bg-gradient-purple text-light">
+                                    <tr class="bg-gradient-red text-light">
                                         <th class="py-1 text-center">Size</th>
                                         <th class="py-1 text-center">File name</th>
                                         <th class="py-1 text-center">Price</th>

@@ -6,7 +6,7 @@
         object-position:center center;
     }
 </style>
-<div class="card card-outline card-purple rounded-0 shadow">
+<div class="card card-outline card-red rounded-0 shadow">
 	<div class="card-header">
 		<h3 class="card-title">List of Transactions</h3>
 		<div class="card-tools">
@@ -27,7 +27,7 @@
 					<col width="15%">
 				</colgroup>
 				<thead>
-					<tr class="bg-gradient-purple text-light">
+					<tr class="bg-gradient-red text-light">
 						<th>#</th>
 						<th>Date Created</th>
 						<th>Transaction Code</th>

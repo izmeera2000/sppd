@@ -383,7 +383,7 @@ table[data-placeholder='true'] tbody:empty:after {
 }
 
 .btn-primary {
-    background: #6f42c1 linear-gradient(180deg, #855eca, #6f42c1) repeat-x !important;
+    background: #ff0000 linear-gradient(180deg, #c90000, #ff0000) repeat-x !important;
     color: #fff;
-    border-color: #6f42c1;
+    border-color: #ff0000;
 }

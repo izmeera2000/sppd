@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
 $price_arr = [];
 ?>
 <div class="content py-3">
-    <div class="card card-outline card-purple shadow rounded-0">
+    <div class="card card-outline card-red shadow rounded-0">
         <div class="card-header">
             <h3 class="card-title">
                 <b><?= isset($id) ? "Update Transaction Details - " . $code : "New Transaction" ?></b>
@@ -78,7 +78,7 @@ $price_arr = [];
                                 <col width="25%">
                             </colgroup>
                             <thead>
-                                <tr class="bg-gradient-purple text-light">
+                                <tr class="bg-gradient-red text-light">
                                     <th class="py-1 text-center"></th>
                                     <th class="py-1 text-center">Size</th>
                                     <th class="py-1 text-center">Filename</th>

@@ -19,7 +19,7 @@
 	}
 </style>
 <div class="col-lg-12">
-	<div class="card card-outline card-purple rounded-0 shadow">
+	<div class="card card-outline card-red rounded-0 shadow">
 		<div class="card-header">
 			<h5 class="card-title">System Information</h5>
 			<!-- <div class="card-tools">

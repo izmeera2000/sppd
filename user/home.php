@@ -17,7 +17,7 @@
             <span class="info-box-text">Total Categories</span>
             <span class="info-box-number text-right">
                 <?php 
-                    echo $conn->query("SELECT * FROM `category_list` where delete_flag= 0 and `status` = 1 ")->num_rows;
+                    echo $conn->query("SELECT * FROM `category_list` WHERE delete_flag= 0 AND `status` = 1 ")->num_rows;
                 ?>
             </span>
             </div>
@@ -33,7 +33,9 @@
             <span class="info-box-text">Pending Transactions</span>
             <span class="info-box-number text-right">
                 <?php 
-                    echo $conn->query("SELECT * FROM `transaction_list` where `status` = 0 ")->num_rows;
+
+                $id =  $_settings->info('user_id');
+                    echo $conn->query("SELECT * FROM `transaction_list` WHERE (`status` = 0)   AND (user_id = '$id') ")->num_rows;
                 ?>
             </span>
             </div>
@@ -49,7 +51,7 @@
             <span class="info-box-text">On-Progress Transactions</span>
             <span class="info-box-number text-right">
                 <?php 
-                    echo $conn->query("SELECT * FROM `transaction_list` where `status` = 1 ")->num_rows;
+                    echo $conn->query("SELECT * FROM `transaction_list` WHERE (`status` = 1)   AND (user_id = '$id')  ")->num_rows;
                 ?>
             </span>
             </div>
@@ -65,7 +67,7 @@
             <span class="info-box-text">Finished Transactions</span>
             <span class="info-box-number text-right">
                 <?php 
-                    echo $conn->query("SELECT * FROM `transaction_list` where `status` = 2 ")->num_rows;
+                    echo $conn->query("SELECT * FROM `transaction_list` WHERE (`status` = 2)   AND (user_id = '$id')  ")->num_rows;
                 ?>
             </span>
             </div>
@@ -73,24 +75,7 @@
         </div>
         <!-- /.info-box -->
     </div>
-    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-        <div class="info-box bg-gradient-light shadow">
-            <span class="info-box-icon bg-gradient-maroon elevation-1"><i class="fas fa-coins"></i></span>
-
-            <div class="info-box-content">
-            <span class="info-box-text">Todays Payments</span>
-            <span class="info-box-number text-right">
-                <?php 
-                    $payments = $conn->query("SELECT SUM(amount) FROM `payment_history` where date(date_created) = '".(date("Y-m-d"))."'")->fetch_array()[0];
-                    $payments = $payments > 0 ? $payments : 0;
-                    echo number_format($payments,2);
-                ?>
-            </span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-    </div>
+ 
 </div>
 <hr>
 <div class="row">

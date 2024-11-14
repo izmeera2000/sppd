@@ -53,7 +53,7 @@
     </div>
     <div class="col-5 h-100 bg-gradient">
       <div class="d-flex w-100 h-100 justify-content-center align-items-center">
-        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-purple rounded-0 shadow">
+        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-red rounded-0 shadow">
           <div class="card-header rounded-0">
             <h4 class="text-purle text-center"><b>Register</b></h4>
           </div>
@@ -105,11 +105,20 @@
             </div>
           </div>
           <div class="card-footer">
-            <div class="col-md-12 justify-content-end d-flex">
-              <div class="row btn-group">
-                <button class="btn  #cimg btn-primary mr-2 " form="manage-user">Register</button>
-                <!-- <a class="btn   btn-secondary" href="./?page=user/list">Cancel</a> -->
+ 
+
+            <div class="row">
+              <div class="col-4">
+                <a href="index">Already Have Account? Login</a>
+
               </div>
+              <div class="col-4">
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button class="btn  #cimg btn-primary mr-2 " form="manage-user">Register</button>
+              </div>
+              <!-- /.col -->
             </div>
           </div>
         </div>

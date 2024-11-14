@@ -19,7 +19,7 @@ function duration($dur = 0){
     return $dur;
 }
 ?>
-<div class="card card-outline card-purple rounded-0 shadow">
+<div class="card card-outline card-red rounded-0 shadow">
 	<div class="card-header">
 		<h3 class="card-title">Date-wise Transaction Report</h3>
 		<div class="card-tools">
@@ -79,7 +79,7 @@ function duration($dur = 0){
 					<col width="15%">
 				</colgroup>
 				<thead>
-					<tr class="bg-gradient-purple text-light">
+					<tr class="bg-gradient-red text-light">
 						<th>#</th>
 						<th>Date/Time</th>
 						<th>Transaction Code</th>
@@ -107,7 +107,7 @@ function duration($dur = 0){
 											echo '<span class="rounded-pill badge badge-secondary bg-gradient-secondary px-3">Pending</span>';
 											break;
 										case 1:
-											echo '<span class="rounded-pill badge badge-primary bg-gradient-purple px-3">On-Progress</span>';
+											echo '<span class="rounded-pill badge badge-primary bg-gradient-red px-3">On-Progress</span>';
 											break;
 										case 2:
 											echo '<span class="rounded-pill badge badge-teal bg-gradient-teal px-3 text-light">Done</span>';
@@ -143,7 +143,7 @@ function duration($dur = 0){
 		   var _h = $('head').clone()
 		   var _el = $('<div>')
 		   _h.find("title").text("Date-wise Transaction Report - Print View")
-		   _p.find('tr.text-light').removeClass('text-light bg-gradient-purple bg-lightblue')
+		   _p.find('tr.text-light').removeClass('text-light bg-gradient-red bg-lightblue')
 		   _el.append(_h)
 		   _el.append(_p)
 		   var nw = window.open("","_blank","width=1000,height=900,left=300,top=50")

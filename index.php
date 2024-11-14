@@ -1,38 +1,46 @@
- <?php require_once('./config.php') ?> 
+<?php require_once('./config.php') ?>
 <!DOCTYPE html>
 <html lang="en" class="" style="height: auto;">
 <?php require_once('inc/header.php') ?>
+
 <body class="hold-transition ">
   <script>
     start_loader()
   </script>
   <style>
-    html, body{
-      height:calc(100%) !important;
-      width:calc(100%) !important;
+    html,
+    body {
+      height: calc(100%) !important;
+      width: calc(100%) !important;
     }
-    body{
+
+    body {
       background-image: url("<?php echo validate_image($_settings->info('cover')) ?>");
       background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: 100% 100%;
+      background-attachment: fixed;
+      background-size: 100% 100%;
     }
-    .login-title{
+
+    .login-title {
       text-shadow: 2px 2px black
     }
-    #login{
-      flex-direction:column !important
+
+    #login {
+      flex-direction: column !important
     }
-    #logo-img{
-        height:150px;
-        width:150px;
-        object-fit:scale-down;
-        object-position:center center;
-        /* border-radius:100%; */
+
+    #logo-img {
+      height: 150px;
+      width: 150px;
+      object-fit: scale-down;
+      object-position: center center;
+      /* border-radius:100%; */
     }
-    #login .col-7,#login .col-5{
+
+    #login .col-7,
+    #login .col-5 {
       width: 100% !important;
-      max-width:unset !important
+      max-width: unset !important
     }
   </style>
   <div class="h-100 d-flex align-items-center w-100" id="login">
@@ -41,11 +49,11 @@
         <center><img src="<?= validate_image($_settings->info('logo')) ?>" alt="" id="logo-img"></center>
         <h1 class="text-center py-5 login-title"><b><?php echo $_settings->info('name') ?></b></h1>
       </div>
-      
+
     </div>
     <div class="col-5 h-100 bg-gradient">
       <div class="d-flex w-100 h-100 justify-content-center align-items-center">
-        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-purple rounded-0 shadow">
+        <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-red rounded-0 shadow">
           <div class="card-header rounded-0">
             <h4 class="text-purle text-center"><b>Login</b></h4>
           </div>
@@ -68,7 +76,11 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-8">
+                <div class="col-4">
+                  <a href="register">Dont Have Account? Register</a>
+
+                </div>
+                <div class="col-4">
                 </div>
                 <!-- /.col -->
                 <div class="col-4">
@@ -83,17 +95,18 @@
     </div>
   </div>
 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
 
-<script>
-  $(document).ready(function(){
-    end_loader();
-  })
-</script>
+  <script>
+    $(document).ready(function () {
+      end_loader();
+    })
+  </script>
 </body>
+
 </html>

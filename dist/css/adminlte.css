@@ -18351,13 +18351,13 @@ body.text-sm .input-group-text {
 .bg-red .btn-tool,
 .bg-gradient-red .btn-tool,
 .card-red:not(.card-outline) .btn-tool {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 0, 0, 0.8);
 }
 
 .bg-red .btn-tool:hover,
 .bg-gradient-red .btn-tool:hover,
 .card-red:not(.card-outline) .btn-tool:hover {
-  color: #fff;
+  color: #ff0000;
 }
 
 .card.bg-red .bootstrap-datetimepicker-widget .table td,
@@ -18377,7 +18377,7 @@ body.text-sm .input-group-text {
 .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.hour:hover,
 .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.minute:hover,
 .card.bg-gradient-red .bootstrap-datetimepicker-widget table td.second:hover {
-  background-color: #c62232;
+  background-color: #ff0000;
   color: #fff;
 }
 
@@ -30792,8 +30792,8 @@ blockquote.quote-gray-dark h6 {
 }
 
 .bg-gradient-red {
-  background: #dc3545 linear-gradient(180deg, #e15361, #dc3545) repeat-x !important;
-  color: #fff;
+  background: #ff0000 linear-gradient(180deg, #c90000, #ff0000) repeat-x !important;
+  color: #ff0000;
 }
 
 .bg-gradient-red.btn.disabled, .bg-gradient-red.btn:disabled, .bg-gradient-red.btn:not(:disabled):not(.disabled):active, .bg-gradient-red.btn:not(:disabled):not(.disabled).active,

@@ -9,7 +9,7 @@ foreach($user->fetch_array() as $k =>$v){
 	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
 </script>
 <?php endif;?>
-<div class="card card-outline card-purple">
+<div class="card card-outline card-red">
 	<div class="card-body">
 		<div class="container-fluid">
 			<div id="msg"></div>
