@@ -55,43 +55,54 @@
       <div class="d-flex w-100 h-100 justify-content-center align-items-center">
         <div class="card col-sm-12 col-md-6 col-lg-3 card-outline card-red rounded-0 shadow">
           <div class="card-header rounded-0">
-            <h4 class="text-purle text-center"><b>Login</b></h4>
+            <h4 class="text-purle text-center"><b>New Password</b></h4>
           </div>
           <div class="card-body rounded-0">
-            <form id="login-frm" action="" method="post">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" autofocus name="username" placeholder="Username">
+            <form id="reset-frm" action="" method="post">
+              <?php $id = $_GET['token'] ?>
+              <input type="hidden" value="<?php echo $id?>" name="id">
+              <!-- <div class="input-group mb-3">
+                <input type="text" class="form-control" autofocus name="email" placeholder="Email">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-user"></span>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="input-group mb-3">
-                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input type="password" class="form-control" name="password1" placeholder="Password">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-lock"></span>
                   </div>
                 </div>
               </div>
-              <div class="row d-flex justify-content-end mb-4">
+
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row d-flex justify-content-end mb-4">
               <div class="col-4 ">
                   <a href="forgot">Forgot Password?</a>
 
                 </div>
-              </div>
+              </div> -->
 
               <div class="row ">
                 <div class="col-5">
-                  Dont Have Account?<a href="register">Register Now</a>
+                  <!-- Dont Have Account?<a href="register">Register Now</a> -->
 
                 </div>
                 <div class="col-3">
                 </div>
                 <!-- /.col -->
                 <div class="col-4">
-                  <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                  <button type="submit" class="btn btn-primary btn-block btn-flat">Submit</button>
                 </div>
                 <!-- /.col -->
               </div>

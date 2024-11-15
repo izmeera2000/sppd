@@ -1,83 +1,105 @@
 <?php
 require_once '../config.php';
-class Login extends DBConnection {
+class Login extends DBConnection
+{
 	private $settings;
-	public function __construct(){
+	public function __construct()
+	{
 		global $_settings;
 		$this->settings = $_settings;
 
 		parent::__construct();
 		ini_set('display_error', 1);
 	}
-	public function __destruct(){
+	public function __destruct()
+	{
 		parent::__destruct();
 	}
-	public function index(){
-		echo "<h1>Access Denied</h1> <a href='".base_url."'>Go Back.</a>";
+	public function index()
+	{
+		echo "<h1>Access Denied</h1> <a href='" . base_url . "'>Go Back.</a>";
 	}
-	public function login(){
+	public function login()
+	{
 		extract($_POST);
 		$stmt = $this->conn->prepare("SELECT * from users where username = ? and password = ? ");
 		$pw = md5($password);
-		$stmt->bind_param('ss',$username,$pw);
+		$stmt->bind_param('ss', $username, $pw);
 		$stmt->execute();
 		$qry = $stmt->get_result();
-		if($qry->num_rows > 0){
+		if ($qry->num_rows > 0) {
 			$res = $qry->fetch_array();
-			if($res['status'] != 1){
-				return json_encode(array('status'=>'notverified'));
+			if ($res['status'] != 1) {
+				return json_encode(array('status' => 'notverified'));
 			}
-			foreach($res as $k => $v){
-				if(!is_numeric($k) && $k != 'password'){
-					$this->settings->set_userdata($k,$v);
+			foreach ($res as $k => $v) {
+				if (!is_numeric($k) && $k != 'password') {
+					$this->settings->set_userdata($k, $v);
 				}
 			}
-			$this->settings->set_userdata('login_type',$res['type']);
-			$this->settings->set_userdata('user_id',$res['id']);
-		return json_encode(array('status'=>'success','login_type'=> $res['type']));
-		}else{
-		return json_encode(array('status'=>'incorrect','error'=>$this->conn->error));
+			$this->settings->set_userdata('login_type', $res['type']);
+			$this->settings->set_userdata('user_id', $res['id']);
+			return json_encode(array('status' => 'success', 'login_type' => $res['type']));
+		} else {
+			return json_encode(array('status' => 'incorrect', 'error' => $this->conn->error));
 		}
 	}
-	public function logout(){
-		if($this->settings->sess_des()){
+	public function logout()
+	{
+		if ($this->settings->sess_des()) {
 			redirect('index.php');
 		}
 	}
-	function employee_login(){
+	function employee_login()
+	{
 		extract($_POST);
 		$stmt = $this->conn->prepare("SELECT *,concat(lastname,', ',firstname,' ',middlename) as fullname from employee_list where email = ? and `password` = ? ");
 		$pw = md5($password);
-		$stmt->bind_param('ss',$email,$pw);
+		$stmt->bind_param('ss', $email, $pw);
 		$stmt->execute();
 		$qry = $stmt->get_result();
-		if($this->conn->error){
+		if ($this->conn->error) {
 			$resp['status'] = 'failed';
-			$resp['msg'] = "An error occurred while fetching data. Error:". $this->conn->error;
-		}else{
-			if($qry->num_rows > 0){
+			$resp['msg'] = "An error occurred while fetching data. Error:" . $this->conn->error;
+		} else {
+			if ($qry->num_rows > 0) {
 				$res = $qry->fetch_array();
-				if($res['status'] == 1){
-					foreach($res as $k => $v){
-						$this->settings->set_userdata($k,$v);
+				if ($res['status'] == 1) {
+					foreach ($res as $k => $v) {
+						$this->settings->set_userdata($k, $v);
 					}
-					$this->settings->set_userdata('login_type',2);
+					$this->settings->set_userdata('login_type', 2);
 					$resp['status'] = 'success';
-				}else{
+				} else {
 					$resp['status'] = 'failed';
 					$resp['msg'] = "Your Account is Inactive. Please Contact the Management to verify your account.";
 				}
-			}else{
+			} else {
 				$resp['status'] = 'failed';
 				$resp['msg'] = "Invalid email or password.";
 			}
 		}
 		return json_encode($resp);
 	}
-	public function employee_logout(){
-		if($this->settings->sess_des()){
+	public function employee_logout()
+	{
+		if ($this->settings->sess_des()) {
 			redirect('./login.php');
 		}
+	}
+
+
+	public function forgot_password()
+	{
+		$email = $_POST['email'];
+		$newpassword = base64_encode(random_bytes(10));
+		// $data = [
+		// 	'password' => $newpassword,
+
+		// ];
+		$sql = "UPDATE users set password = {$newpassword} where email = '{$email}' ";
+		$save = $this->conn->query($sql);
+
 	}
 }
 $action = !isset($_GET['f']) ? 'none' : strtolower($_GET['f']);
@@ -94,6 +116,10 @@ switch ($action) {
 		break;
 	case 'elogout':
 		echo $auth->employee_logout();
+		break;
+
+	case 'forgot_password':
+		echo $auth->forgot_password();
 		break;
 	default:
 		echo $auth->index();
