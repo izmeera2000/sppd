@@ -85,9 +85,10 @@ $(document).ready(function () {
       },
       success: function (resp) {
         if (resp) {
-          resp = JSON.parse(resp);
-          if (resp.status == "success") {
             console.log(resp);
+          resp = JSON.parse(resp);
+
+          if (resp.status == "success") {
             // if (resp.login_type == 1){
 
             //     location.href = _base_url_ + 'admin';

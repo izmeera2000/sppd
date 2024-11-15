@@ -31,6 +31,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<input type="text" name="phone" id="phone" class="form-control" value="<?php echo isset($meta['phone']) ? $meta['phone']: '' ?>" required>
 				</div>
 				<div class="form-group col-6">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email" class="form-control" value="<?php echo isset($meta['email']) ? $meta['email']: '' ?>" required  autocomplete="off">
+				</div>
+				<div class="form-group col-6">
 					<label for="username">Username</label>
 					<input type="text" name="username" id="username" class="form-control" value="<?php echo isset($meta['username']) ? $meta['username']: '' ?>" required  autocomplete="off">
 				</div>

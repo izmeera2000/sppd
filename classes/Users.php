@@ -32,7 +32,7 @@ class Users extends DBConnection
 			exit;
 		}
 		foreach ($_POST as $k => $v) {
-			if (in_array($k, array('firstname', 'middlename', 'lastname', 'phone', 'username', 'type'))) {
+			if (in_array($k, array('firstname', 'middlename','email', 'lastname', 'phone', 'username', 'type'))) {
 				if (!empty($data))
 					$data .= " , ";
 				$data .= " {$k} = '{$v}' ";

@@ -72,6 +72,12 @@
                   <input type="text" name="lastname" id="lastname" class="form-control"
                     value="<?php echo isset($meta['lastname']) ? $meta['lastname'] : '' ?>" required>
                 </div>
+
+                <div class="form-group ">
+                  <label for="name">Email</label>
+                  <input type="text" name="email" id="email" class="form-control"
+                    value="<?php echo isset($meta['email']) ? $meta['email'] : '' ?>" required>
+                </div>
                 <div class="form-group">
                   <label for="phone">Phone Number</label>
                   <input type="text" name="phone" id="phone" class="form-control"

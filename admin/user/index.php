@@ -23,6 +23,10 @@ foreach($user->fetch_array() as $k =>$v){
 					<label for="name">Last Name</label>
 					<input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($meta['lastname']) ? $meta['lastname']: '' ?>" required>
 				</div>
+				<div class="form-group  ">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email" class="form-control" value="<?php echo isset($meta['email']) ? $meta['email']: '' ?>" required  autocomplete="off">
+				</div>
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input type="text" name="username" id="username" class="form-control" value="<?php echo isset($meta['username']) ? $meta['username']: '' ?>" required  autocomplete="off">
