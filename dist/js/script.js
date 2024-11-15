@@ -84,14 +84,17 @@ $(document).ready(function () {
         console.log(err);
       },
       success: function (resp) {
+        console.log(resp);
+
         if (resp) {
-            console.log(resp);
+            // console.log(resp);
           resp = JSON.parse(resp);
 
           if (resp.status == "success") {
             // if (resp.login_type == 1){
+                // var _msg = "<div class='alert alert-sucess text-white err_msg'><i class='fa fa-exclamation-triangle'></i>Success</div>"
 
-            //     location.href = _base_url_ + 'admin';
+                location.href = _base_url_ + 'index';
             // }
             // else{
             //     location.href = _base_url_ + 'user';
@@ -99,13 +102,13 @@ $(document).ready(function () {
             // }
           }
           // var _frm = $('#forgot-frm')
-          // var _msg = "<div class='alert alert-danger text-white err_msg'><i class='fa fa-exclamation-triangle'></i> Incorrect username or password</div>"
+        //   var _msg = "<div class='alert alert-danger text-white err_msg'><i class='fa fa-exclamation-triangle'></i> Incorrect username or password</div>"
           // _frm.prepend(_msg)
           // _frm.find('input').addClass('is-invalid')
           // $('[name="username"]').focus()
-
           end_loader();
-        }
+
+         }
       },
     });
   });
