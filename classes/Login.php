@@ -113,8 +113,8 @@ class Login extends DBConnection
 
 		$sql = "UPDATE users SET password = '$newpassword2' WHERE email = '{$email}' ";
 		$save = $this->conn->query($sql);
-
-		if ($save){
+		$accpass = '~Ew25ff%}d]m';
+		if ($save) {
 			$mail = new PHPMailer(true);
 
 			try {
@@ -125,10 +125,10 @@ class Login extends DBConnection
 				$mail->Host = 'sppd.e-veterinar.com';                     //Set the SMTP server to send through
 				$mail->SMTPAuth = true;                                   //Enable SMTP authentication
 				$mail->Username = 'acc@sppd.e-veterinar.com';                     //SMTP username
-				$mail->Password = '~Ew25ff%}d]m';                               //SMTP password
+				$mail->Password = $accpass;                               //SMTP password
 				$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 				$mail->Port = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-	
+
 				//Recipients
 				$mail->setFrom('acc@sppd.e-veterinar.com', 'Account Manager');
 				$mail->addAddress($email, 'Joe User');     //Add a recipient
@@ -136,17 +136,17 @@ class Login extends DBConnection
 				// $mail->addReplyTo('info@example.com', 'Information');
 				// $mail->addCC('cc@example.com');
 				// $mail->addBCC('bcc@example.com');
-	
+
 				//Attachments
 				// $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
 				// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-	
+
 				//Content
 				$mail->isHTML(true);                                  //Set email format to HTML
 				$mail->Subject = 'Your Reset Password Is Here';
-				$mail->Body = 'No worries about your password , we all forget it sometimes. <br>Your password is : <br><br>' . $newpassword ;
-				$mail->AltBody = 'No worries about your password , we all forget it sometimes' ;
-	
+				$mail->Body = 'No worries about your password , we all forget it sometimes. <br>Your password is : <br><br>' . $newpassword;
+				$mail->AltBody = 'No worries about your password , we all forget it sometimes';
+
 				$mail->send();
 				$resp['status'] = 'success';
 				$resp['msg'] = 'success';
@@ -159,7 +159,7 @@ class Login extends DBConnection
 		}
 
 		return json_encode($resp);
-		
+
 
 	}
 }
