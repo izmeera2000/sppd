@@ -77,7 +77,7 @@
               </div>
               <div class="row d-flex justify-content-end mb-4">
               <div class="col-4 ">
-                  <a href="forgot">Forgot Password?</a>
+                  <a href="forgot.php">Forgot Password?</a>
 
                 </div>
               </div>
