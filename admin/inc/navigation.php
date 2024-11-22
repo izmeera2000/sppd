@@ -7,7 +7,7 @@ if ($_settings->userdata('type') == 1):
 else:
     $base_page = "user";
 endif; 
-?>?>
+?>
 
 <aside class="main-sidebar sidebar-dark-maroon elevation-4 sidebar-no-expand bg-gradient-red">
   <!-- Brand Logo -->
