@@ -1,11 +1,10 @@
 </style>
 <!-- Main Sidebar Container -->
 <?php
+    $base_page = "user";
 
 if ($_settings->userdata('type') == 1):
     $base_page = "admin";
-else:
-    $base_page = "user";
 endif; 
 ?>
 
