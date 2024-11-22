@@ -182,7 +182,7 @@
         type: 'POST',
         success: function (resp) {
           if (resp == 1) {
-            location.href = './?page=user/list';
+            location.href = 'login.php';
           } else {
             $('#msg').html('<div class="alert alert-danger">Username already exist</div>')
             $("html, body").animate({ scrollTop: 0 }, "fast");
