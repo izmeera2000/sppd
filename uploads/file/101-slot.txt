@@ -1,0 +1,14 @@
+untuk komputer 
+
+1 slot 1h30m
+930 rehat 30min
+
+
+0	Unattended / Unexcused Absence
+1	Present
+2	Late
+3 	Pending Excuse of Absence
+4	Excused Absence
+5	Break
+
+

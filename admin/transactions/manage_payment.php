@@ -42,50 +42,54 @@ if (isset($_GET['transaction_id'])) {
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
         <input type="hidden" name="transaction_id"
             value="<?php echo isset($_GET['transaction_id']) ? $_GET['transaction_id'] : '' ?>">
-        <?php if ($_settings->userdata('type') == 1): ?>
+        <!-- <?php if ($_settings->userdata('type') == 1): ?> -->
 
             <div class="form-group">
                 <label for="amount" class="control-label">Amount</label>
                 <input type="number" id="amount" name="amount" value="<?= isset($amount) ? $amount : '' ?>"
-                    max="<?= isset($balance) ? $balance + (isset($amount) ? $amount : 0) : '' ?>"
+                    max="<?= isset($balance) ? $balance + (isset($amount) ? $amount : 1) : '' ?>"
                     class="form-control form-control-border form-control-sm text-right" required>
             </div>
-        <?php endif; ?>
+            <!-- <?php endif; ?> -->
 
         <div class="row justify-content-center">
 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-lg btn-primary active">
+                <!-- <label class="btn btn-lg btn-primary active">
                     <input type="radio" name="method" id="cash" autocomplete="off" checked value="CASH">
-                    Cash
-                </label>
-                <label class="btn btn-lg btn-primary">
-                    <input type="radio" name="method" id="qr" autocomplete="off" value="QR"> QR
-                </label>
+                    Cash -->
+                <!-- </label> -->
+                <!-- <label class="btn btn-lg btn-primary"> -->
+                <input type="hidden" name="method" id="qr" autocomplete="off" value="QR"> QR
+                <!-- </label> -->
             </div>
         </div>
 
         <div class="row justify-content-center">
-            <img class="qr-code d-none" src="<?php echo base_url . 'uploads/qr.jpg'; ?>">
+            <img class="qr-code" src="<?php echo base_url . 'uploads/qr.jpg'; ?>">
+        </div>
+        <div class="row justify-content-center">
+
+            <input type="file" name="filename_payment" id="filename_payment">
         </div>
     </form>
 </div>
 <script>
     $(document).ready(function () {
-        function toggleQrCode() {
-            if ($('#qr').is(':checked')) {
-                $('.qr-code').removeClass('d-none');
-            } else {
-                $('.qr-code').addClass('d-none');
-            }
-        }
+        // function toggleQrCode() {
+        //     if ($('#qr').is(':checked')) {
+        //         $('.qr-code').removeClass('d-none');
+        //     } else {
+        //         $('.qr-code').addClass('d-none');
+        //     }
+        // }
 
         // Initial check
-        toggleQrCode();
+        // toggleQrCode();
 
         // Add event listeners to the radio buttons
-        $('#cash').change(toggleQrCode);
-        $('#qr').change(toggleQrCode);
+        // $('#cash').change(toggleQrCode);
+        // $('#qr').change(toggleQrCode);
     });
     $(function () {
         $('#uni_modal').on('shown.bs.modal', function () {

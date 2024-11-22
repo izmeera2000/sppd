@@ -156,7 +156,7 @@ class Master extends DBConnection
 
 		$data = "";
 		foreach ($_POST as $k => $v) {
-			if (in_array($k, array('code', 'user_id','client_name', 'client_contact','filename', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
+			if (in_array($k, array('code', 'user_id', 'client_name', 'client_contact', 'filename', 'filename_payment', 'client_address', 'total_amount', 'paid_amount', 'balance', 'payment_status', 'status'))) {
 				if (!is_numeric($v))
 					$v = $this->conn->real_escape_string($v);
 				if (!empty($data))
@@ -218,9 +218,28 @@ class Master extends DBConnection
 				$this->conn->query("UPDATE `transaction_list` set total_amount = '{$total}' where id = '{$tid}'");
 				if (isset($amount)) {
 					// echo $method;
-					if (empty($id))
-						$save3 = $this->conn->query("INSERT INTO payment_history (`transaction_id`,`amount`,`method`) VALUES ('{$tid}','{$amount}','{$method}')");
-					else {
+					if (empty($id)) {
+						$name2 = $_FILES['filename_payment']['name'];
+
+						$tmp_name = $_FILES['filename_payment']['tmp_name'];
+						$upload_dir = base_app . 'uploads/payment/';
+						$datetime = date('Ymd-His'); // Format: YYYYMMDD_HHMMSS
+
+						$upload_file = $upload_dir . "$datetime-" . basename($name2);
+						$filename2= "$datetime-" . basename($name2);
+
+						if (move_uploaded_file($tmp_name, $upload_file)) {
+							$save3 = $this->conn->query("INSERT INTO payment_history (`transaction_id`,`amount`,`method`,`filename`) VALUES ('{$tid}','{$amount}','{$method}','{$filename2}')");
+
+							// echo "File successfully uploaded: " . $name . "<br>";
+						} else {
+							$resp['status'] = 'failed';
+							$resp['msg'] = "Failed to upload file: " . $name2 . "<br>";
+							$resp['err'] = "Failed to upload file: " . $name2 . "<br>";
+						}
+
+
+					} else {
 						$save3 = $this->conn->query("UPDATE payment_history set `amount` = '{$amount}', `method` = '{$method}' where transaction_id = '{$tid}' order by unix_timestamp(date_created) asc limit 1");
 					}
 					if ($save3) {
@@ -281,7 +300,8 @@ class Master extends DBConnection
 					// echo "File successfully deleted.";
 				} else {
 					$resp['status'] = 'failed';
-					$resp['error'] = 'failed';				}
+					$resp['error'] = 'failed';
+				}
 			} else {
 				// echo "File does not exist.";
 			}
@@ -306,8 +326,30 @@ class Master extends DBConnection
 				$data .= " `{$k}`='{$v}' ";
 			}
 		}
+
 		if (empty($id)) {
-			$sql = "INSERT INTO `payment_history` set {$data} ";
+
+			$name2 = $_FILES['filename_payment']['name'];
+
+			$tmp_name = $_FILES['filename_payment']['tmp_name'];
+			$upload_dir = base_app . 'uploads/payment/';
+			$datetime = date('Ymd-His'); // Format: YYYYMMDD_HHMMSS
+
+			$upload_file = $upload_dir . "$datetime-" . basename($name2);
+			$filename2= "$datetime-" . basename($name2);
+
+			if (move_uploaded_file($tmp_name, $upload_file)) {
+				$data .= ", `filename`='{$filename2}' ";
+				$sql = "INSERT INTO `payment_history` set {$data} ";
+
+				// echo "File successfully uploaded: " . $name . "<br>";
+			} else {
+				$resp['status'] = 'failed';
+				$resp['msg'] = "Failed to upload file: " . $name2 . "<br>";
+				$resp['err'] = "Failed to upload file: " . $name2 . "<br>";
+			}
+
+
 		} else {
 			$sql = "UPDATE `payment_history` set {$data} where id = '{$id}' ";
 		}

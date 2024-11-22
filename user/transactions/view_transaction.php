@@ -185,7 +185,7 @@ if (isset($_GET['id'])) {
                                     <col width="20%">
                                 </colgroup>
                                 <thead>
-                                    <tr class="bg-gradient-red">
+                                    <tr class="bg-gradient-purple">
                                         <th class="py-1 text-center">DateTime</th>
                                         <th class="py-1 text-center">Amount</th>
                                         <th class="py-1 text-center">Action</th>
@@ -203,7 +203,7 @@ if (isset($_GET['id'])) {
                                                 </td>
                                                 <td class="px-2 py-1 text-right align-middle">
                                                     <?= "RM " . number_format($row['amount'], 2) ?><br>
-                                                    <?= $row['method']?>
+                                                    <a   href="<?= $row['filename']  ?>" ><?= $row['filename']  ?></a>
 
                                                 </td>
                                                 <td class="px-2 py-1 align-middle text-center">

@@ -135,15 +135,18 @@ $price_arr = [];
                         </table>
                     </fieldset>
                     <fieldset>
-                        <!-- <div class="row"> -->
-                        <!-- <div class="form-group col-md-6"> -->
-                        <!-- <label for="amount" class="control-label">Payment/Partial Payment</label> -->
-                        <input type="hidden" name="amount" id="amount" value="<?= isset($amount) ? $amount : 0 ?>"
-                            class="form-control form-control-sm rounded-0 text-right" required>
-                        <!-- </div> -->
+                        <div class="row">
+                            <legend class="text-muted">Payment Method</legend>
 
-                        <legend class="text-muted">Payment Method</legend>
+                            <div class="form-group col-md-6">
 
+                                <label for="amount" class="control-label">Payment/Partial Payment</label>
+                                <input type="text" name="amount" id="amount" value="<?= isset($amount) ? $amount : 0 ?>"
+                                    class="form-control form-control-sm rounded-0 text-right" required>
+                                <input type="hidden" name="method" id="qr" autocomplete="off" value="QR">
+                            </div>
+                        </div>
+                        <!-- 
                         <div class="row">
 
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -155,11 +158,17 @@ $price_arr = [];
                                     <input type="radio" name="method" id="qr" autocomplete="off" value="QR"> QR
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
-                            <img class="qr-code d-none" src="<?php echo base_url . 'uploads/qr.jpg'; ?>">
+                            <img class="qr-code  " src="<?php echo base_url . 'uploads/qr.jpg'; ?>">
+
                         </div>
+                        <div class="row">
+
+                            <input type="file" name="filename_payment" id="filename_payment" >
+                        </div>
+
                     </fieldset>
                 </form>
             </div>
@@ -200,13 +209,13 @@ $price_arr = [];
 
 
     $(document).ready(function () {
-        function toggleQrCode() {
-            if ($('#qr').is(':checked')) {
-                $('.qr-code').removeClass('d-none');
-            } else {
-                $('.qr-code').addClass('d-none');
-            }
-        }
+        // function toggleQrCode() {
+        //     if ($('#qr').is(':checked')) {
+        //         $('.qr-code').removeClass('d-none');
+        //     } else {
+        //         $('.qr-code').addClass('d-none');
+        //     }
+        // }
 
         // Initial check
         toggleQrCode();
@@ -331,7 +340,12 @@ $price_arr = [];
                     return false; // Exit the .each() loop
                 }
                 formData.append('filename[]', file, file.name);
+
             });
+            const fileInput2 = document.getElementById('filename_payment'); 
+            const file2 = fileInput2.files[0]; 
+
+            formData.append("filename_payment", file2, file2.name);
 
             if (!allFilesSelected) {
                 return; // Exit the function if any file input is empty

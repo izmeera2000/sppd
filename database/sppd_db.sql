@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 15, 2024 at 06:13 AM
+-- Generation Time: Nov 22, 2024 at 03:55 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -62,27 +62,29 @@ CREATE TABLE IF NOT EXISTS `payment_history` (
   `transaction_id` int NOT NULL,
   `amount` float NOT NULL DEFAULT '0',
   `method` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payment_history`
 --
 
-INSERT INTO `payment_history` (`id`, `transaction_id`, `amount`, `method`, `date_created`, `date_updated`) VALUES
-(4, 3, 25, '0', '2022-01-26 14:16:31', '2024-10-30 12:17:09'),
-(5, 3, 25, '0', '2022-01-26 14:16:41', '2024-10-30 12:17:11'),
-(7, 5, 1500, '0', '2022-01-26 14:20:06', '2024-10-30 12:17:13'),
-(8, 5, 2640, '0', '2022-01-26 14:20:50', '2024-10-30 12:17:14'),
-(74, 81, 0, 'QR', '2024-10-30 12:45:36', NULL),
-(75, 81, 0, 'QR', '2024-10-30 12:53:07', NULL),
-(76, 82, 0, 'QR', '2024-11-09 17:59:49', NULL),
-(77, 83, 0, 'QR', '2024-11-14 22:09:44', NULL),
-(78, 83, 3, 'QR', '2024-11-14 22:09:59', NULL),
-(79, 83, 4, 'QR', '2024-11-14 22:10:03', NULL);
+INSERT INTO `payment_history` (`id`, `transaction_id`, `amount`, `method`, `filename`, `date_created`, `date_updated`) VALUES
+(4, 3, 25, '0', NULL, '2022-01-26 14:16:31', '2024-10-30 12:17:09'),
+(5, 3, 25, '0', NULL, '2022-01-26 14:16:41', '2024-10-30 12:17:11'),
+(7, 5, 1500, '0', NULL, '2022-01-26 14:20:06', '2024-10-30 12:17:13'),
+(8, 5, 2640, '0', NULL, '2022-01-26 14:20:50', '2024-10-30 12:17:14'),
+(74, 81, 0, 'QR', NULL, '2024-10-30 12:45:36', NULL),
+(75, 81, 0, 'QR', NULL, '2024-10-30 12:53:07', NULL),
+(76, 82, 0, 'QR', NULL, '2024-11-09 17:59:49', NULL),
+(77, 83, 0, 'QR', NULL, '2024-11-14 22:09:44', NULL),
+(78, 83, 3, 'QR', NULL, '2024-11-14 22:09:59', NULL),
+(79, 83, 4, 'QR', NULL, '2024-11-14 22:10:03', NULL),
+(89, 101, 5, 'QR', '20241122-233234-test2.pdf', '2024-11-22 23:32:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -166,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `transaction_items` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`),
   KEY `price_id` (`price_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaction_items`
@@ -175,7 +177,8 @@ CREATE TABLE IF NOT EXISTS `transaction_items` (
 INSERT INTO `transaction_items` (`id`, `transaction_id`, `price_id`, `price`, `quantity`, `filename`, `total`, `date_updated`) VALUES
 (16, 81, 3, 5, 2, '81-0-JHEV_Terma.pdf', 10, '2024-10-30 12:45:36'),
 (17, 82, 4, 6, 3, '82-a05a966b-b274-469b-873f-4f47fb856b18.pdf', 18, '2024-11-09 17:59:49'),
-(18, 83, 4, 6, 15, '83-BUSINESS_CHANGES_13012023.pdf', 90, '2024-11-14 22:09:44');
+(18, 83, 4, 6, 15, '83-BUSINESS_CHANGES_13012023.pdf', 90, '2024-11-14 22:09:44'),
+(36, 101, 3, 5, 1, '101-slot.txt', 5, '2024-11-22 23:32:34');
 
 -- --------------------------------------------------------
 
@@ -199,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `transaction_list` (
   `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `transaction_list`
@@ -210,7 +213,8 @@ INSERT INTO `transaction_list` (`id`, `code`, `user_id`, `client_name`, `client_
 (5, '202201-00002', NULL, 'Claire Blake', '09789456123', 'Over Here', 4140, 4140, 0, 2, 2, '2022-01-26 14:20:06', '2022-01-26 14:26:09'),
 (81, '202410-00001', 7, 'Guest', 'N/Asdasa', '', 10, 0, 10, 0, 0, '2024-10-30 12:45:36', '2024-10-30 12:45:36'),
 (82, '202411-00001', 1, 'Adminstratorasdasd', 'asdasda', '', 18, 0, 18, 0, 0, '2024-11-09 17:59:49', '2024-11-09 17:59:49'),
-(83, '202411-00002', 1, 'Adminstrator', '2313', '', 90, 7, 83, 1, 0, '2024-11-14 22:09:44', '2024-11-14 22:10:03');
+(83, '202411-00002', 1, 'Adminstrator', '2313', '', 90, 7, 83, 1, 0, '2024-11-14 22:09:44', '2024-11-14 22:10:03'),
+(101, '202411-00003', 1, 'Adminstrator', '121211', '', 5, 5, 0, 2, 0, '2024-11-22 23:32:34', '2024-11-22 23:32:34');
 
 -- --------------------------------------------------------
 

@@ -49,7 +49,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 					<label for="type">User Type</label>
 					<select name="type" id="type" class="custom-select"  required>
 						<option value="1" <?php echo isset($meta['type']) && $meta['type'] == 1 ? 'selected': '' ?>>Administrator</option>
-						<option value="2" <?php echo isset($meta['type']) && $meta['type'] == 2 ? 'selected': '' ?>>Staff</option>
+						<option value="2" <?php echo isset($meta['type']) && $meta['type'] == 2 ? 'selected': '' ?>>Student</option>
 					</select>
 				</div>
 				<div class="form-group col-6">
@@ -69,7 +69,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
 			<div class="col-md-12">
 				<div class="row">
 					<button class="btn btn-sm btn-primary mr-2" form="manage-user">Save</button>
-					<!-- <a class="btn btn-sm btn-secondary" href="./?page=user/list">Cancel</a> -->
+					<a class="btn btn-sm btn-secondary" href="./?page=user/list">Cancel</a>
 				</div>
 			</div>
 		</div>
