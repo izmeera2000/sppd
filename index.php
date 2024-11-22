@@ -84,7 +84,7 @@
 
               <div class="row ">
                 <div class="col-5">
-                  Dont Have Account?<a href="register">Register Now</a>
+                  Dont Have Account?<a href="register.php">Register Now</a>
 
                 </div>
                 <div class="col-3">
