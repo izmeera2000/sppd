@@ -1,14 +1,12 @@
 </style>
 <!-- Main Sidebar Container -->
-<?php if ($_settings->userdata('type') == 1):
+<?php
+    $base_page = "user";
 
-  $base_page = "admin";
-
- endif; 
- if ($_settings->userdata('type') == 2):
-  $base_page = "user";
-
-endif; ?>
+if ($_settings->userdata('type') == 1):
+    $base_page = "admin";
+endif; 
+?>
 
 <aside class="main-sidebar sidebar-dark-maroon elevation-4 sidebar-no-expand bg-gradient-red">
   <!-- Brand Logo -->
