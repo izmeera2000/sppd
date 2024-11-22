@@ -131,7 +131,7 @@ class Login extends DBConnection
 
 				//Recipients
 				$mail->setFrom('acc@sppd.e-veterinar.com', 'Account Manager');
-				$mail->addAddress($email, 'Joe User');     //Add a recipient
+				$mail->addAddress($email, 'User');     //Add a recipient
 				// $mail->addAddress('ellen@example.com');               //Name is optional
 				// $mail->addReplyTo('info@example.com', 'Information');
 				// $mail->addCC('cc@example.com');
