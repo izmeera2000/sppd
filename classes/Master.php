@@ -1,5 +1,77 @@
 <?php
-require_once('../config.php');
+require_once '../config.php';
+
+
+
+require '../plugins/PHPMailer/src/Exception.php';
+require '../plugins/PHPMailer/src/PHPMailer.php';
+require '../plugins/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+function getEmailContent($filePath, $var = "")
+{
+	ob_start(); // Start output buffering
+	extract($var);
+	include(getcwd() . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'email' . DIRECTORY_SEPARATOR . $filePath); // Include the PHP file
+	$content = ob_get_clean(); // Get the content of the output buffer and clean it
+	return $content;
+
+
+}
+function sendmail($receiver, $title, $filepath, $var = "")
+{
+
+
+
+
+$nama= "payment@sppd.e-veterinar.com";
+
+$test = 'TPIq)&OukVHx';
+	$mail = new PHPMailer(true);
+
+	try {
+
+		$mail->isSMTP();
+		$mail->SMTPDebug = SMTP::DEBUG_OFF;
+		$mail->Host = 'sppd.e-veterinar.com';
+		$mail->SMTPAuth = true;
+		$mail->Username = $nama;
+		$mail->Password = $test;
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+		$mail->Port = 465; // Adjust as needed (e.g., 465 for SSL)
+
+
+		$mail->setFrom('payment@sppd.e-veterinar.com', 'Payment');
+		$mail->addAddress($receiver);
+
+
+		$emailBodyContent = getEmailContent($filepath, $var);
+
+
+		// $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
+
+	
+
+		$mail->isHTML(true);
+
+		$mail->Subject = $title;
+		if (!$var) {
+
+
+			$mail->Body = 'This is the HTML message body <b>in bold!</b>';
+			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+		} else {
+			$mail->Body = $emailBodyContent;         // Set the body with the content from the .php file
+			$mail->AltBody = $title;
+		}
+		$mail->send();
+		// echo 'Message has been sent';
+	} catch (Exception $e) {
+		echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+	}
+}
 class Master extends DBConnection
 {
 	private $settings;
@@ -226,7 +298,7 @@ class Master extends DBConnection
 						$datetime = date('Ymd-His'); // Format: YYYYMMDD_HHMMSS
 
 						$upload_file = $upload_dir . "$datetime-" . basename($name2);
-						$filename2= "$datetime-" . basename($name2);
+						$filename2 = "$datetime-" . basename($name2);
 
 						if (move_uploaded_file($tmp_name, $upload_file)) {
 							$save3 = $this->conn->query("INSERT INTO payment_history (`transaction_id`,`amount`,`method`,`filename`) VALUES ('{$tid}','{$amount}','{$method}','{$filename2}')");
@@ -245,13 +317,24 @@ class Master extends DBConnection
 					if ($save3) {
 						$total_paid = $this->conn->query("SELECT SUM(amount) from payment_history where transaction_id = '{$tid}'")->fetch_array()[0];
 						$total_paid = $total_paid > 0 ? $total_paid : 0;
-						$pstatus = $total_paid > 0 ? ($total_paid == $total) ? 2 : 1 : 0;
+						$pstatus = $total_paid < 0 ? 2 : ($total_paid > 0 ? ($total_paid == $total ? 2 : 1) : 0);
 						$balance = $total - $total_paid;
 						$this->conn->query("UPDATE `transaction_list` set paid_amount = '{$total_paid}', payment_status = '{$pstatus}', `balance` ='{$balance}' where id = '{$tid}'");
 						if (empty($id))
 							$resp['msg'] = " Transaction has successfully added.";
 						else
 							$resp['msg'] = " Transaction details has been updated successfully.";
+						if ($pstatus == 2) {
+							$var = array(
+								'id2' => $tid, // Example variable
+
+								'alasan' => "test", // Example variable
+							);
+
+							// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
+							sendmail('payment@sppd.e-veterinar.com', 'Receipt', 'receipt.php', $var);
+							// $resp['msg'] = "Transaction has been fully paid.";
+						}
 					} else {
 						$resp['status'] = 'failed';
 						$resp['msg'] = " Transaction Items has failed to save.";
@@ -336,7 +419,7 @@ class Master extends DBConnection
 			$datetime = date('Ymd-His'); // Format: YYYYMMDD_HHMMSS
 
 			$upload_file = $upload_dir . "$datetime-" . basename($name2);
-			$filename2= "$datetime-" . basename($name2);
+			$filename2 = "$datetime-" . basename($name2);
 
 			if (move_uploaded_file($tmp_name, $upload_file)) {
 				$data .= ", `filename`='{$filename2}' ";
@@ -364,7 +447,7 @@ class Master extends DBConnection
 			$total = $total > 0 ? $total : 0;
 			$total_paid = $this->conn->query("SELECT SUM(amount) from payment_history where transaction_id = '{$transaction_id}'")->fetch_array()[0];
 			$total_paid = $total_paid > 0 ? $total_paid : 0;
-			$pstatus = $total_paid > 0 ? ($total_paid == $total) ? 2 : 1 : 0;
+			$pstatus = $total_paid < 0 ? 2 : ($total_paid > 0 ? ($total_paid == $total ? 2 : 1) : 0);
 			$balance = $total - $total_paid;
 			$this->conn->query("UPDATE `transaction_list` set paid_amount = '{$total_paid}', payment_status = '{$pstatus}', `balance` ='{$balance}' where id = '{$transaction_id}'");
 		} else {
@@ -374,6 +457,17 @@ class Master extends DBConnection
 		}
 		if ($resp['status'] == 'success')
 			$this->settings->set_flashdata('success', $resp['msg']);
+		if ($pstatus == 2) {
+			$var = array(
+				'id2' => $transaction_id, // Example variable
+
+				'alasan' => "test", // Example variable
+			);
+
+			// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
+			sendmail('payment@sppd.e-veterinar.com', 'Receipt', 'receipt.php', $var);
+			// $resp['msg'] = "Transaction has been fully paid.";
+		}
 		return json_encode($resp);
 	}
 	function delete_payment()

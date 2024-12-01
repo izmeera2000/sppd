@@ -1,6 +1,12 @@
 <?php
-if (isset($_GET['id'])) {
-    $qry = $conn->query("SELECT * FROM `transaction_list` where id = '{$_GET['id']}'");
+require_once('../config.php');
+
+$db = new DBConnection;
+$conn = $db->conn;
+
+$id = $id2;
+
+    $qry = $conn->query("SELECT * FROM `transaction_list` where id = '$id'");
     if ($qry->num_rows > 0) {
         $res = $qry->fetch_array();
         foreach ($res as $k => $v) {
@@ -8,37 +14,46 @@ if (isset($_GET['id'])) {
                 $$k = $v;
         }
     }
-}
+
 ?>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+      <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+   <!-- Select2 -->
+  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
+    <!-- fullCalendar -->
+    <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/adminlte.css">
+    <link rel="stylesheet" href="../dist/css/custom.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../plugins/summernote/summernote-bs4.min.css">
+     <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+</head>
 <div class="content py-4">
     <div class="card card-outline card-navy shadow rounded-0">
         <div class="card-header">
             <h5 class="card-title">Transaction Details</h5>
-            <div class="card-tools">
-                <?php if ($_settings->userdata('type') == 1): ?>
-
-                    <?php if (isset($status) && $status != 2): ?>
-                        <a class="btn btn-sm btn-primary btn-flat"
-                            href="./?page=transactions/manage_transaction&id=<?= isset($id) ? $id : '' ?>"><i
-                                class="fa fa-edit"></i> Edit</a>
-                        <button class="btn btn-sm btn-danger btn-flat" id="delete_transaction"><i class="fa fa-trash"></i>
-                            Delete</button>
-                    <?php endif; ?>
-                <?php endif; ?>
-
-                <?php if (isset($balance) && $balance > 0): ?>
-                    <button class="btn btn-sm btn-navy bg-navy btn-flat" type="button" id="add_payment"><i
-                            class="fa fa-plus"></i> Add Payment</button>
-                <?php endif; ?>
-                <?php if ($_settings->userdata('type') == 1): ?>
-
-                    <button class="btn btn-sm btn-info bg-info btn-flat" type="button" id="update_status">Updated
-                        Status</button>
-                <?php endif; ?>
-
-                <a href="./?page=transactions" class="btn btn-default border btn-sm btn-flat"><i
-                        class="fa fa-angle-left"></i> Back to List</a>
-            </div>
+        
         </div>
         <div class="card-body">
             <div class="container-fluid">
@@ -51,46 +66,8 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label text-muted">Payment Status</label>
-                            <div class="pl-4">
-                                <?php
-                                switch ($payment_status) {
-                                    case 0:
-                                        echo '<span class="rounded-pill badge badge-secondary bg-gradient-secondary px-3">Unpaid</span>';
-                                        break;
-                                    case 1:
-                                        echo '<span class="rounded-pill badge badge-primary bg-gradient-primary px-3">Partially Paid</span>';
-                                        break;
-                                    case 2:
-                                        echo '<span class="rounded-pill badge badge-teal bg-gradient-teal px-3 text-light">Paid</span>';
-                                        break;
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label text-muted">Status</label>
-                            <div class="pl-4">
-                                <?php
-                                switch ($status) {
-                                    case 0:
-                                        echo '<span class="rounded-pill badge badge-secondary bg-gradient-secondary px-3">Pending</span>';
-                                        break;
-                                    case 1:
-                                        echo '<span class="rounded-pill badge badge-primary bg-gradient-primary px-3">On-Progress</span>';
-                                        break;
-                                    case 2:
-                                        echo '<span class="rounded-pill badge badge-teal bg-gradient-teal px-3 text-light">Done</span>';
-                                        break;
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
+
+                    
                 </div>
                 <fieldset>
                     <legend class="text-muted">Client Information</legend>
@@ -108,14 +85,7 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="control-label text-muted">Address</label>
-                                <div class="pl-4"><?= isset($client_address) ? $client_address : 'N/A' ?></div>
-                            </div>
-                        </div>
-                    </div> -->
+       
                 </fieldset>
                 <div class="clear-fix my-3"></div>
                 <fieldset>
@@ -206,26 +176,7 @@ if (isset($_GET['id'])) {
                                                     <a   href="../uploads/payment/<?= $row['filename']  ?>" ><?= $row['filename']  ?></a>
 
                                                 </td>
-                                                <td class="px-2 py-1 align-middle text-center">
-                                                    <?php if ($_settings->userdata('type') == 1): ?>
-
-                                                        <button type="button"
-                                                            class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon"
-                                                            data-toggle="dropdown">
-                                                            Action
-                                                            <span class="sr-only">Toggle Dropdown</span>
-                                                        </button>
-                                                        <div class="dropdown-menu" role="menu">
-                                                            <a class="dropdown-item edit_payment" href="javascript:void(0)"
-                                                                data-id="<?php echo $row['id'] ?>"><span
-                                                                    class="fa fa-edit text-primary"></span> Edit</a>
-                                                            <a class="dropdown-item delete_payment" href="javascript:void(0)"
-                                                                data-id="<?php echo $row['id'] ?>"><span
-                                                                    class="fa fa-trash text-danger"></span> Delete</a>
-                                                        </div>
-                                                    <?php endif; ?>
-
-                                                </td>
+                                        
                                             </tr>
                                         <?php endwhile; ?>
                                     <?php endif; ?>
@@ -252,75 +203,3 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $('#update_status').click(function () {
-            uni_modal("Update Status of <b><?= isset($code) ? $code : "" ?></b>", "transactions/update_status.php?transaction_id=<?= isset($id) ? $id : "" ?>")
-        })
-        $('#add_payment').click(function () {
-            uni_modal("Add Payment for <b><?= isset($code) ? $code : "" ?></b>", "transactions/manage_payment.php?transaction_id=<?= isset($id) ? $id : "" ?>")
-        })
-        $('.edit_payment').click(function () {
-            uni_modal("Edit Payment for <b><?= isset($code) ? $code : "" ?></b>", "transactions/manage_payment.php?transaction_id=<?= isset($id) ? $id : "" ?>&id=" + $(this).attr('data-id'))
-        })
-        $('.delete_payment').click(function () {
-            _conf("Are you sure to delete this transaction's payment?", "delete_payment", [$(this).attr('data-id')])
-        })
-        $('#delete_transaction').click(function () {
-            _conf("Are you sure to delete this transaction?", "delete_transaction", ['<?= isset($id) ? $id : '' ?>'])
-        })
-        $('.view_data').click(function () {
-            uni_modal("Report Details", "transactions/view_report.php?id=" + $(this).attr('data-id'), "mid-large")
-        })
-        $('.table td, .table th').addClass('py-1 px-2 align-middle')
-        $('.table').dataTable({
-            columnDefs: [
-                { orderable: false, targets: 5 }
-            ],
-        });
-    })
-    function delete_payment($id) {
-        start_loader();
-        $.ajax({
-            url: _base_url_ + "classes/Master.php?f=delete_payment",
-            method: "POST",
-            data: { id: $id },
-            dataType: "json",
-            error: err => {
-                console.log(err)
-                alert_toast("An error occured.", 'error');
-                end_loader();
-            },
-            success: function (resp) {
-                if (typeof resp == 'object' && resp.status == 'success') {
-                    location.reload();
-                } else {
-                    alert_toast("An error occured.", 'error');
-                    end_loader();
-                }
-            }
-        })
-    }
-    function delete_transaction($id) {
-        start_loader();
-        $.ajax({
-            url: _base_url_ + "classes/Master.php?f=delete_transaction",
-            method: "POST",
-            data: { id: $id },
-            dataType: "json",
-            error: err => {
-                console.log(err)
-                alert_toast("An error occured.", 'error');
-                end_loader();
-            },
-            success: function (resp) {
-                if (typeof resp == 'object' && resp.status == 'success') {
-                    location.href = "./?page=transactions";
-                } else {
-                    alert_toast("An error occured.", 'error');
-                    end_loader();
-                }
-            }
-        })
-    }
-</script>

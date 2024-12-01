@@ -203,7 +203,7 @@ if (isset($_GET['id'])) {
                                                 </td>
                                                 <td class="px-2 py-1 text-right align-middle">
                                                     <?= "RM " . number_format($row['amount'], 2) ?><br>
-                                                    <a   href="<?= $row['filename']  ?>" ><?= $row['filename']  ?></a>
+                                                    <a   href="../uploads/payment/<?= $row['filename']  ?>" ><?= $row['filename']  ?></a>
 
                                                 </td>
                                                 <td class="px-2 py-1 align-middle text-center">
