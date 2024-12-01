@@ -332,7 +332,7 @@ class Master extends DBConnection
 							);
 
 							// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
-							sendmail('payment@sppd.e-veterinar.com', 'Receipt', 'receipt.php', $var);
+							sendmail( $_settings->userdata('email') , 'Receipt', 'receipt.php', $var);
 							// $resp['msg'] = "Transaction has been fully paid.";
 						}
 					} else {
@@ -465,7 +465,7 @@ class Master extends DBConnection
 			);
 
 			// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
-			sendmail('payment@sppd.e-veterinar.com', 'Receipt', 'receipt.php', $var);
+			sendmail($_settings->userdata('email')  , 'Receipt', 'receipt.php', $var);
 			// $resp['msg'] = "Transaction has been fully paid.";
 		}
 		return json_encode($resp);
