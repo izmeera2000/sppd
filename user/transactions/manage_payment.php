@@ -42,16 +42,14 @@ if (isset($_GET['transaction_id'])) {
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
         <input type="hidden" name="transaction_id"
             value="<?php echo isset($_GET['transaction_id']) ? $_GET['transaction_id'] : '' ?>">
-        <!-- <?php if ($_settings->userdata('type') == 1): ?> -->
-
+ 
             <div class="form-group">
                 <label for="amount" class="control-label">Amount</label>
                 <input type="number" id="amount" name="amount" value="<?= isset($amount) ? $amount : '' ?>"
                     max="<?= isset($balance) ? $balance + (isset($amount) ? $amount : 1) : '' ?>"
                     class="form-control form-control-border form-control-sm text-right" required>
             </div>
-            <!-- <?php endif; ?> -->
-
+ 
         <div class="row justify-content-center">
 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">

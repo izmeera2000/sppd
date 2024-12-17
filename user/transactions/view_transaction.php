@@ -126,7 +126,9 @@ if (isset($_GET['id'])) {
                                 <colgroup>
                                     <col width="30%">
                                     <col width="25%">
-                                    <col width="25%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="10%">
                                     <col width="25%">
                                 </colgroup>
                                 <thead>
@@ -134,6 +136,7 @@ if (isset($_GET['id'])) {
                                         <th class="py-1 text-center">Size</th>
                                         <th class="py-1 text-center">File name</th>
                                         <th class="py-1 text-center">Price</th>
+                                        <th class="py-1 text-center">Pages</th>
                                         <th class="py-1 text-center">Qty</th>
                                         <th class="py-1 text-center">Total</th>
                                     </tr>
@@ -157,6 +160,9 @@ if (isset($_GET['id'])) {
                                                     <?= number_format($row['price'], 2) ?>
                                                 </td>
                                                 <td class=" align-middle px-2 py-1 text-right">
+                                                    <?=  ($row['pages']) ?>
+                                                </td>
+                                                <td class=" align-middle px-2 py-1 text-right">
                                                     <?= number_format($row['quantity']) ?>
                                                 </td>
                                                 <td class=" align-middle px-2 py-1 text-right total">
@@ -168,7 +174,7 @@ if (isset($_GET['id'])) {
                                 </tbody>
                                 <tfoot>
                                     <tr class="bg-gradient-secondary">
-                                        <th class="py-1 text-center" colspan='4'><b>Total<b></th>
+                                        <th class="py-1 text-center" colspan='5'><b>Total<b></th>
                                         <th class="px-2 py-1 text-right total_amount">
                                             <?= isset($total_amount) ? number_format($total_amount, 2) : 0 ?>
                                         </th>

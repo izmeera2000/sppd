@@ -26,9 +26,9 @@ function sendmail($receiver, $title, $filepath, $var = "")
 
 
 
-$nama= "payment@sppd.e-veterinar.com";
+	$nama = "payment@sppd.e-veterinar.com";
 
-$test = 'TPIq)&OukVHx';
+	$test = 'TPIq)&OukVHx';
 	$mail = new PHPMailer(true);
 
 	try {
@@ -52,7 +52,7 @@ $test = 'TPIq)&OukVHx';
 
 		// $mail->addEmbeddedImage(getcwd() . '/assets/img/logo3.png', 'logo_cid'); // 'logo_cid' is a unique ID
 
-	
+
 
 		$mail->isHTML(true);
 
@@ -268,18 +268,46 @@ class Master extends DBConnection
 					$resp['err'] = "Failed to upload file: " . $name . "<br>";
 				}
 			}
+			function countPages($pages)
+			{
+				// Split the input string by commas to get individual ranges and page numbers
+				$ranges = explode(',', $pages);
+
+				$totalPages = 0;
+
+				// Loop through each range or individual page number
+				foreach ($ranges as $range) {
+					// If the range contains a '-', it's a page range (e.g., "1-2")
+					if (strpos($range, '-') !== false) {
+						// Split the range by the dash to get the start and end page numbers
+						list($start, $end) = explode('-', $range);
+						$start = (int) $start;  // Convert start to an integer
+						$end = (int) $end;      // Convert end to an integer
+
+						// If the start page is less than or equal to the end page, calculate the number of pages
+						if ($start <= $end) {
+							$totalPages += ($end - $start + 1);  // Add the number of pages in the range
+						}
+					} else {
+						// If it's a single page number, just add 1 to the total
+						$totalPages += 1;
+					}
+				}
+
+				return $totalPages;
+			}
 			foreach ($price_id as $k => $v) {
 				if (!empty($data))
 					$data .= ", ";
-				$_total = $price[$k] * $quantity[$k];
+				$_total = $price[$k] * $quantity[$k] * countPages($pages[$k]);
 				$total += $_total;
 				$filename = isset($fileNames[$k]) ? "$tid-" . $fileNames[$k] : '';
-				$data .= "('{$tid}','{$v}','{$price[$k]}','{$quantity[$k]}','{$_total}','{$filename}')";
+				$data .= "('{$tid}','{$v}','{$price[$k]}','{$quantity[$k]}','{$_total}','{$filename}','{$pages[$k]}')";
 
 
 			}
 			if (!empty($data)) {
-				$sql2 = "INSERT INTO `transaction_items` (`transaction_id`,`price_id`,`price`,`quantity`,`total`,`filename`) VALUES {$data}";
+				$sql2 = "INSERT INTO `transaction_items` (`transaction_id`,`price_id`,`price`,`quantity`,`total`,`filename`,`pages`) VALUES {$data}";
 				// echo $sql2;
 			}
 			$save2 = false;
@@ -332,7 +360,7 @@ class Master extends DBConnection
 							);
 
 							// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
-							sendmail( $_settings->userdata('email') , 'Receipt', 'receipt.php', $var);
+							sendmail($_settings->userdata('email'), 'Receipt', 'receipt.php', $var);
 							// $resp['msg'] = "Transaction has been fully paid.";
 						}
 					} else {
@@ -465,7 +493,7 @@ class Master extends DBConnection
 			);
 
 			// sendmail($email, "SURAT PERINGATAN TIDAK HADIR LATIHAN", 'amaran2.php', $var);
-			sendmail($_settings->userdata('email')  , 'Receipt', 'receipt.php', $var);
+			sendmail($_settings->userdata('email'), 'Receipt', 'receipt.php', $var);
 			// $resp['msg'] = "Transaction has been fully paid.";
 		}
 		return json_encode($resp);

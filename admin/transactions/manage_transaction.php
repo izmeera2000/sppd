@@ -74,8 +74,10 @@ $price_arr = [];
                                 <col width="5%">
                                 <col width="30%">
                                 <col width="25%">
-                                <col width="15%">
-                                <col width="25%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="10%">
+                                <col width="10%">
                             </colgroup>
                             <thead>
                                 <tr class="bg-gradient-red text-light">
@@ -83,6 +85,7 @@ $price_arr = [];
                                     <th class="py-1 text-center">Size</th>
                                     <th class="py-1 text-center">Filename</th>
                                     <th class="py-1 text-center">Price</th>
+                                    <th class="py-1 text-center">Pages</th>
                                     <th class="py-1 text-center">Qty</th>
                                     <th class="py-1 text-center">Total</th>
                                 </tr>
@@ -112,6 +115,7 @@ $price_arr = [];
                                             <td class=" align-middle px-2 py-1 text-right price">
                                                 <?= number_format($row['price'], 2) ?>
                                             </td>
+
                                             <td class=" align-middle px-2 py-1"><input type="number" name="quantity[]" min='1'
                                                     value="<?= $row['quantity'] ?> "
                                                     class="form-control form-control-border rounded-0"></td>
@@ -124,7 +128,7 @@ $price_arr = [];
                             </tbody>
                             <tfoot>
                                 <tr class="bg-gradient-secondary">
-                                    <th class="py-1 text-center" colspan='5'><b>Total<b><input type="hidden"
+                                    <th class="py-1 text-center" colspan='6'><b>Total<b><input type="hidden"
                                                     name="total_amount"
                                                     value="<?= isset($total_amount) ? $total_amount : 0 ?>"></th>
                                     <th class="px-2 py-1 text-right total_amount">
@@ -166,7 +170,7 @@ $price_arr = [];
                         </div>
                         <div class="row">
 
-                            <input type="file" name="filename_payment" id="filename_payment" >
+                            <input type="file" name="filename_payment" id="filename_payment">
                         </div>
 
                     </fieldset>
@@ -197,6 +201,7 @@ $price_arr = [];
 
         </td>
         <td class=" align-middle px-2 py-1 text-right price">0.00</td>
+        <td class=" align-middle px-2 py-1"><input type="text" name="pages[]" value="1" class="form-control  "></td>
         <td class=" align-middle px-2 py-1"><input type="number" name="quantity[]" min='1' value="1"
                 class="form-control form-control-border rounded-0"></td>
         <td class=" align-middle px-2 py-1 text-right total">0.00</td>
@@ -241,12 +246,19 @@ $price_arr = [];
             pdfjsLib.getDocument(typedArray).promise.then(function (pdf) {
                 console.log(pdf.numPages);
                 // Update the quantity input in the same row
-                $this.closest('tr').find('input[name="quantity[]"]').prop('readonly', false).val(pdf.numPages);
+                var numbpage = "1-" + pdf.numPages
+                if (pdf.numPages == 1) {
+                    numbpage = "1";
+                }
+                $this.closest('tr').find('input[name="pages[]"]').prop('readonly', false).val(numbpage);
+                $this.closest('tr').find('input[name="quantity[]"]').prop('readonly', false).val(1);
                 calc_total();
             });
         };
         reader.readAsArrayBuffer(file);
     });
+
+
     var price_arr = $.parseJSON('<?= json_encode($price_arr) ?>')
     // console.log(price_arr);
     window.calc_total = function () {
@@ -254,14 +266,41 @@ $price_arr = [];
         $('#item-list tbody tr').each(function () {
             var price = $(this).find('input[name="price[]"]').val()
             var qty = $(this).find('input[name="quantity[]"]').val()
+            var pages = $(this).find('input[name="pages[]"]').val()
             qty = qty > 0 ? qty : 0;
-            var total = parseFloat(price) * parseFloat(qty);
+            // console.log(price);
+            // console.log(qty);
+            console.log(countPages(pages));
+            var total = parseFloat(price) * parseFloat(qty) * (countPages(pages));
+            console.log(total);
             $(this).find('.total').text(parseFloat(total).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }))
             $(this).find('input[name="total[]"]').val(total)
             total_amount += parseFloat(total)
         })
         $('input[name="total_amount"]').val(total_amount)
         $('.total_amount').text(parseFloat(total_amount).toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+    }
+    function countPages(pages) {
+        // Split the input string by commas to get the individual ranges and page numbers
+        const ranges = pages.split(',');
+
+        let totalPages = 0;
+
+        // Loop through each range or individual page number
+        ranges.forEach(range => {
+            // If the range contains a '-', it's a page range (e.g., "1-2")
+            if (range.includes('-')) {
+                const [start, end] = range.split('-').map(Number); // Convert start and end to numbers
+                if (start <= end) {
+                    totalPages += end - start + 1; // Calculate the number of pages in the range
+                }
+            } else {
+                // If it's a single page number, just add 1 to the total
+                totalPages += 1;
+            }
+        });
+
+        return totalPages;
     }
     $(function () {
 
@@ -290,6 +329,7 @@ $price_arr = [];
                 tr.find('.item_name').text(data.category + " - " + data.size)
                 tr.find('input[name="price_id[]"]').val(data.id)
                 tr.find('input[name="price[]"]').val(data.price)
+
                 // tr.find('input[name="filename[]"]')
 
 
@@ -300,6 +340,9 @@ $price_arr = [];
                     calc_total()
                 })
                 tr.find('input[name="quantity[]"]').on('keydown keypress change input', function () {
+                    calc_total()
+                })
+                tr.find('input[name="pages[]"]').on('keydown keypress change input', function () {
                     calc_total()
                 })
                 calc_total()
@@ -342,8 +385,8 @@ $price_arr = [];
                 formData.append('filename[]', file, file.name);
 
             });
-            const fileInput2 = document.getElementById('filename_payment'); 
-            const file2 = fileInput2.files[0]; 
+            const fileInput2 = document.getElementById('filename_payment');
+            const file2 = fileInput2.files[0];
 
             formData.append("filename_payment", file2, file2.name);
 
@@ -385,6 +428,8 @@ $price_arr = [];
                 }
             });
         });
+
+        console.log(countPages("1-2,4")); // Output: 3 (pages 1, 2, and 4)
 
     })
 </script>
